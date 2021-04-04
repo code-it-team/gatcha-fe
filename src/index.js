@@ -1,3 +1,4 @@
+import { purple, teal } from "@material-ui/core/colors";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import React from "react";
@@ -9,15 +10,15 @@ import reportWebVitals from "./reportWebVitals";
 const theme = createMuiTheme({
   palette: {
     type: "dark",
-    secondary: {
-      dark: "#5f0937",
-      main: "#880e4f",
-      light: "#9f3e72",
-    },
     primary: {
-      dark: "#381f75",
-      main: "#512da8",
-      light: "#7357b9",
+      dark: teal[900],
+      main: teal[500],
+      light: teal[300],
+    },
+    secondary: {
+      dark: purple[900],
+      main: purple[500],
+      light: purple[300],
     },
   },
 });
