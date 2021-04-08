@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -40,6 +42,7 @@ const AuthContainer = ({ WrappedComponent }) => {
         <Avatar
           className={classes.avatar}
           src="/assets/code-it-logo.png"
+          variant="rounded"
         ></Avatar>
         {WrappedComponent}
       </Paper>
