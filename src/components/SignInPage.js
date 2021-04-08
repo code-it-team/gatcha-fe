@@ -1,32 +1,26 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, Link, TextField, Typography } from "@material-ui/core";
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import _ from "lodash";
+import { Link } from "@reach/router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { _ROUTES } from "src/constants";
 import { _MESSAGES } from "src/constants/messages";
-import { renderError } from "src/helpers";
+import { isSubmitDisabled, renderError } from "src/helpers";
 import * as yup from "yup";
 import AuthContainer from "./AuthContainer";
 import CustomNotification from "./CustomNotification";
 
-// #####################   Helpers    ######################
-/**
- *
- * @param {boolean} isSubmitting
- * @param {boolean} isValid
- * @param {object} touchedFields
- * @returns
- */
-const isSubmitDisabled = (isSubmitting, isValid, touchedFields) => {
-  if (isSubmitting || _.isEmpty(touchedFields)) return true;
-  return isValid ? false : true;
-};
+// ########################################################
+// #####################   Helpers    #####################
+// ########################################################
 
-// ##############   Schema & Default Values   ##############
+// ########################################################
+// ##############   Schema & Default Values   #############
+// ########################################################
 const schema = yup.object().shape({
-  email: yup.string().email(_MESSAGES.emailFormat).required(),
-  password: yup.string().required(),
+  email: yup.string().email(_MESSAGES.emailFormat).required(_MESSAGES.required),
+  password: yup.string().required(_MESSAGES.required),
 });
 
 const defaultValues = {
@@ -34,7 +28,9 @@ const defaultValues = {
   password: "",
 };
 
-// ######################   Styles    ######################
+// ########################################################
+// ######################   Styles    #####################
+// ########################################################
 const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -45,9 +41,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// ################   Helper Components    #################
+// ########################################################
+// ################   Helper Components    ################
+// ########################################################
 const Form = () => {
-  // ##################   Notification    ###################
+  // ##################   Notification    #################
   const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
 
@@ -62,6 +60,7 @@ const Form = () => {
     setOpen(false);
   };
 
+  // #############   State & Event Handlers    ############
   const classes = useStyles();
   const {
     handleSubmit,
@@ -100,6 +99,7 @@ const Form = () => {
           name="email"
           render={({ field }) => (
             <TextField
+              required
               variant="outlined"
               margin="normal"
               fullWidth
@@ -117,6 +117,7 @@ const Form = () => {
           name="password"
           render={({ field }) => (
             <TextField
+              required
               variant="outlined"
               margin="normal"
               fullWidth
@@ -141,13 +142,17 @@ const Form = () => {
         </Button>
         <Grid container>
           <Grid item xs={12}>
-            <Link href="#" variant="body2">
-              Forgot password?
-            </Link>
+            {/* <Link to={_ROUTES.signup} style={{ textDecoration: "none" }}>
+              <Typography variant="body2" color="primary">
+                {"Forgot password?"}
+              </Typography>
+            </Link> */}
           </Grid>
           <Grid item>
-            <Link href="#" variant="body2" color="secondary">
-              {"Don't have an account? Sign Up"}
+            <Link to={_ROUTES.signup} style={{ textDecoration: "none" }}>
+              <Typography variant="body2" color="secondary">
+                {"Don't have an account? Sign Up"}
+              </Typography>
             </Link>
           </Grid>
         </Grid>
@@ -163,7 +168,7 @@ const Form = () => {
   );
 };
 
-// #################   Main Component    ###################
+// #################   Main Component    ##################
 const SignInPage = () => {
   return <AuthContainer WrappedComponent={<Form />} />;
 };
