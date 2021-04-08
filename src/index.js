@@ -1,6 +1,7 @@
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core";
 import { purple, teal } from "@material-ui/core/colors";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";

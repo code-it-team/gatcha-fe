@@ -5,7 +5,11 @@ import { _URLS } from "./constants/urls";
 const App = () => {
   return (
     <Router>
-      <SignInPage path={_URLS.signin} default />
+      <SignInPage
+        // @ts-ignore
+        path={_URLS.signin}
+        default
+      />
     </Router>
   );
 };

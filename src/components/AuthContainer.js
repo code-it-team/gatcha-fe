@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // #################   Main Component    ###################
-const AuthContainer = ({ Form }) => {
+const AuthContainer = ({ WrappedComponent }) => {
   const classes = useStyles();
 
   return (
@@ -41,7 +41,7 @@ const AuthContainer = ({ Form }) => {
           className={classes.avatar}
           src="/assets/code-it-logo.png"
         ></Avatar>
-        {Form}
+        {WrappedComponent}
       </Paper>
       <Box mt={8}>
         <CopyRight />

@@ -1,23 +1,31 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Grid, Link, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
+import _ from "lodash";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { _MESSAGES } from "src/constants/messages";
+import { renderError } from "src/helpers";
 import * as yup from "yup";
 import AuthContainer from "./AuthContainer";
+import CustomNotification from "./CustomNotification";
 
 // #####################   Helpers    ######################
 /**
- * @param {object} error
- * @param {string} msg
+ *
+ * @param {boolean} isSubmitting
+ * @param {boolean} isValid
+ * @param {object} touchedFields
+ * @returns
  */
-const renderError = (error, msg) =>
-  error ? <Alert severity="error">{msg}</Alert> : "";
+const isSubmitDisabled = (isSubmitting, isValid, touchedFields) => {
+  if (isSubmitting || _.isEmpty(touchedFields)) return true;
+  return isValid ? false : true;
+};
 
 // ##############   Schema & Default Values   ##############
 const schema = yup.object().shape({
-  email: yup.string().required(),
+  email: yup.string().email(_MESSAGES.emailFormat).required(),
   password: yup.string().required(),
 });
 
@@ -37,12 +45,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// #################   Main Component    ###################
-const SignInPage = () => {
+// ################   Helper Components    #################
+const Form = () => {
+  // ##################   Notification    ###################
+  const [open, setOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   const classes = useStyles();
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting, isValid, touchedFields },
     reset,
     control,
   } = useForm({
@@ -55,12 +78,18 @@ const SignInPage = () => {
     console.log(data);
 
     // Reset form fields
-    reset();
+    reset({ ...defaultValues }, { keepIsValid: false });
+
+    // Successfully submitted notification
+    setNotificationMessage(_MESSAGES.success);
+
+    // Unsuccessfully submitted notification
+
+    // Fire notification
+    handleClick();
   };
 
-  console.log(errors);
-
-  const Form = () => (
+  return (
     <>
       <Typography component="h1" variant="h5">
         Sign In
@@ -69,25 +98,24 @@ const SignInPage = () => {
         <Controller
           control={control}
           name="email"
-          render={({ field: {ref, ...rest} }) => (
+          render={({ field }) => (
             <TextField
               variant="outlined"
               margin="normal"
               fullWidth
               autoComplete="email"
               label="Email Address"
-              inputRef={ref}
-              {...rest}
+              {...field}
               error={errors.email?.message ? true : false}
             />
           )}
         />
-        {renderError(errors.email?.message, _MESSAGES.required)}
+        {renderError(errors.email?.message)}
         <Controller
           control={control}
           defaultValue=""
           name="password"
-          render={({ field: {ref, ...rest} }) => (
+          render={({ field }) => (
             <TextField
               variant="outlined"
               margin="normal"
@@ -95,19 +123,19 @@ const SignInPage = () => {
               autoComplete="current-password"
               type="password"
               label="Password"
-              inputRef={ref}
-              {...rest}
+              {...field}
               error={errors.password?.message ? true : false}
             />
           )}
         />
-        {renderError(errors.password?.message, _MESSAGES.required)}
+        {renderError(errors.password?.message)}
         <Button
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
           className={classes.submit}
+          disabled={isSubmitDisabled(isSubmitting, isValid, touchedFields)}
         >
           Sign In
         </Button>
@@ -124,10 +152,20 @@ const SignInPage = () => {
           </Grid>
         </Grid>
       </form>
+      {/* // Successfully submitted notification */}
+      <CustomNotification
+        handleClose={handleClose}
+        open={open}
+        messageType="success"
+        message={notificationMessage}
+      />
     </>
   );
+};
 
-  return <AuthContainer Form={<Form />} />;
+// #################   Main Component    ###################
+const SignInPage = () => {
+  return <AuthContainer WrappedComponent={<Form />} />;
 };
 
 export default SignInPage;
