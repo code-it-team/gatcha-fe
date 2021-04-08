@@ -1,7 +1,7 @@
-const SignIcon = ({ classes }) => {
+const SignIcon = ({ className }) => {
   return (
     <svg
-      className={classes}
+      className={className}
       id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"

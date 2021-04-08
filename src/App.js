@@ -1,11 +1,11 @@
 import { Router } from "@reach/router";
-import SignInModal from "./components/SignInModal";
+import SignInPage from "./components/SignInPage";
 import { _URLS } from "./constants/urls";
 
 const App = () => {
   return (
     <Router>
-      <SignInModal path={_URLS.signin} default />
+      <SignInPage path={_URLS.signin} default />
     </Router>
   );
 };

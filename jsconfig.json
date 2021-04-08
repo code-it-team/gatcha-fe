@@ -1,0 +1,14 @@
+{
+  "typeAcquisition": {
+    "exclude": ["dotenv", "harmony-reflect", "source"],
+    "enable": true
+  },
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "baseUrl": ".",
+    "checkJs": true,
+    "jsx": "react-jsx"
+  },
+  "exclude": ["node_modules"]
+}
