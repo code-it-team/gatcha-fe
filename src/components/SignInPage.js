@@ -1,9 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import { Box, Button, Grid, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { Link } from "@reach/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { apiAuth } from "src/apis/authentication";
 import { _ROUTES } from "src/constants";
 import { _MESSAGES } from "src/constants/messages";
 import { isSubmitDisabled, renderError } from "src/helpers";
@@ -45,22 +47,7 @@ const useStyles = makeStyles((theme) => ({
 // ################   Helper Components    ################
 // ########################################################
 const Form = () => {
-  // ##################   Notification    #################
-  const [open, setOpen] = useState(false);
-  const [notificationMessage, setNotificationMessage] = useState("");
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
-
-  // #############   State & Event Handlers    ############
+  // ###############   Initializers    ##############
   const classes = useStyles();
   const {
     handleSubmit,
@@ -73,19 +60,42 @@ const Form = () => {
     defaultValues,
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  // ##################   State    #################
+  const [open, setOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [messageType, setMessageType] = useState("success");
+  const [requestResolved, setRequestResolved] = useState(undefined);
 
+  // #############   Event Handlers    #############
+  const onSubmit = (data) => {
+    setRequestResolved(false);
+    // Make API request
+    apiAuth(data, true, reset, fireNotification);
     // Reset form fields
-    reset({ ...defaultValues }, { keepIsValid: false });
+    // reset({ ...defaultValues });
 
     // Successfully submitted notification
-    setNotificationMessage(_MESSAGES.success);
+    // setNotificationMessage(_MESSAGES.success);
 
     // Unsuccessfully submitted notification
+  };
 
-    // Fire notification
-    handleClick();
+  /**
+   * @param {string} message
+   * @param {import("@material-ui/lab/Alert").Color} messageType
+   */
+  const fireNotification = (message, messageType) => {
+    setNotificationMessage(message);
+    setMessageType(messageType);
+    setOpen(true);
+    setRequestResolved(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -136,9 +146,16 @@ const Form = () => {
           variant="contained"
           color="primary"
           className={classes.submit}
-          disabled={isSubmitDisabled(isSubmitting, isValid, touchedFields)}
+          style={{ textTransform: "none" }}
+          disabled={isSubmitDisabled(
+            requestResolved,
+            isSubmitting,
+            isValid,
+            touchedFields
+          )}
         >
-          Sign In
+          <LockOpenIcon fontSize="small" />
+          <Box ml={1}>Sign In</Box>
         </Button>
         <Grid container>
           <Grid item xs={12}>
@@ -161,7 +178,7 @@ const Form = () => {
       <CustomNotification
         handleClose={handleClose}
         open={open}
-        messageType="success"
+        messageType={messageType}
         message={notificationMessage}
       />
     </>

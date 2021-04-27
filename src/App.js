@@ -1,6 +1,6 @@
 import { Router } from "@reach/router";
 import SignInPage from "./components/SignInPage";
-import SignUpPage from "./components/SignUpForm";
+import SignUpPage from "./components/SignUpPage";
 import { _ROUTES } from "./constants/routes";
 
 const App = () => {

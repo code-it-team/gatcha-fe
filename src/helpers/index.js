@@ -9,13 +9,19 @@ export const renderError = (msg) =>
   msg ? <Alert severity="error">{msg}</Alert> : "";
 
 /**
- *
+ * @param {undefined | boolean} requestResolved
  * @param {boolean} isSubmitting
  * @param {boolean} isValid
  * @param {object} touchedFields
- * @returns
+ * @returns {boolean}
  */
-export const isSubmitDisabled = (isSubmitting, isValid, touchedFields) => {
+export const isSubmitDisabled = (
+  requestResolved,
+  isSubmitting,
+  isValid,
+  touchedFields
+) => {
+  if (requestResolved !== undefined) return !requestResolved;
   if (isSubmitting || _.isEmpty(touchedFields)) return true;
   return isValid ? false : true;
 };
