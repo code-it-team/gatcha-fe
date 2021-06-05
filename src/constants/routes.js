@@ -3,4 +3,5 @@ export const _ROUTES = {
   signup: "/signup",
   signin: "/signin",
   authenticate: "/authenticate",
+  error: "/error",
 };

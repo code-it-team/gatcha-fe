@@ -1,6 +1,5 @@
 import { Avatar, Box, Container, makeStyles, Paper } from "@material-ui/core";
-import React from "react";
-import CopyRight from "./CopyRight";
+import Footer from "./Footer";
 
 // ######################   Styles    ######################
 const useStyles = makeStyles((theme) => ({
@@ -33,24 +32,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // #################   Main Component    ###################
-const AuthContainer = ({ WrappedComponent }) => {
+/**
+ *
+ * @param {object} props
+ * @param {JSX.Element} props.WrappedComponent
+ * @param {boolean} [props.showAvatar]
+ * @returns {JSX.Element}
+ */
+const PageContainer = ({ WrappedComponent, showAvatar = true }) => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <Paper className={classes.paper}>
-        <Avatar
-          className={classes.avatar}
-          src="/assets/code-it-logo.png"
-          variant="rounded"
-        ></Avatar>
+        {showAvatar ? (
+          <Box marginBottom="2em">
+            <Avatar
+              className={classes.avatar}
+              src="/assets/code-it-logo.png"
+              variant="rounded"
+            />
+          </Box>
+        ) : null}
         {WrappedComponent}
+        <Footer />
       </Paper>
-      <Box mt={8}>
-        <CopyRight />
-      </Box>
     </Container>
   );
 };
 
-export default AuthContainer;
+export default PageContainer;

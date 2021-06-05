@@ -5,13 +5,13 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { Link } from "@reach/router";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { apiAuth } from "src/apis/authentication";
+import { apiAuth } from "src/apis/apiAuth";
 import { _ROUTES } from "src/constants";
 import { _MESSAGES } from "src/constants/messages";
 import { isSubmitDisabled, renderError } from "src/helpers";
 import * as yup from "yup";
-import AuthContainer from "./AuthContainer";
-import CustomNotification from "./CustomNotification";
+import PageContainer from "../PageContainer";
+import CustomNotification from "../CustomNotification";
 
 // ########################################################
 // #####################   Helpers    #####################
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 // ################   Helper Components    ################
 // ########################################################
 const Form = () => {
-  // ###############   Initializers    ##############
+  // ##################   Initializers    #################
   const classes = useStyles();
   const {
     handleSubmit,
@@ -60,24 +60,17 @@ const Form = () => {
     defaultValues,
   });
 
-  // ##################   State    #################
+  // #####################   State    #####################
   const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
-  const [messageType, setMessageType] = useState("success");
   const [requestResolved, setRequestResolved] = useState(undefined);
+  const [messageType, setMessageType] = useState(undefined);
 
-  // #############   Event Handlers    #############
+  // #################   Event Handlers    ################
   const onSubmit = (data) => {
     setRequestResolved(false);
     // Make API request
     apiAuth(data, true, reset, fireNotification);
-    // Reset form fields
-    // reset({ ...defaultValues });
-
-    // Successfully submitted notification
-    // setNotificationMessage(_MESSAGES.success);
-
-    // Unsuccessfully submitted notification
   };
 
   /**
@@ -187,7 +180,7 @@ const Form = () => {
 
 // #################   Main Component    ##################
 const SignInPage = () => {
-  return <AuthContainer WrappedComponent={<Form />} />;
+  return <PageContainer WrappedComponent={<Form />} />;
 };
 
 export default SignInPage;

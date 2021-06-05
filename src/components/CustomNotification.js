@@ -6,7 +6,7 @@ import Alert from "@material-ui/lab/Alert";
  * @param {object} props
  * @param {boolean} props.open
  * @param {(event: import("react").SyntheticEvent<Element, Event>) => void}  props.handleClose
- * @param {(import("@material-ui/lab/Alert").Color)}  props.messageType
+ * @param {"error" | "success" | "info" | "warning"| undefined}  props.messageType
  * @param {string}  props.message
  * @returns {JSX.Element}
  */

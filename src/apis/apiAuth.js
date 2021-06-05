@@ -1,4 +1,5 @@
-import { _ROUTES, _URLS } from "src/constants";
+import { navigate } from "@reach/router";
+import { _LOCAL_STORAGE_KEY_NAMES, _ROUTES, _URLS } from "src/constants";
 
 const headers = {
   "Content-Type": "application/json",
@@ -25,6 +26,13 @@ export const apiAuth = (body, isAuth, reset, fireNotification) => {
         // If successful
         res.json().then((res) => {
           fireNotification(res.message, "success");
+
+          // save JWT
+          localStorage.setItem(_LOCAL_STORAGE_KEY_NAMES.jwt, res.body.jwt);
+
+          if (subRoute === _ROUTES.signup)
+            setTimeout(() => navigate(_ROUTES.signin), 1000);
+          else setTimeout(() => navigate(_ROUTES.home), 1000);
         });
         reset();
       } else {

@@ -4,13 +4,13 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { Link } from "@reach/router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { apiAuth } from "src/apis/authentication";
+import { apiAuth } from "src/apis/apiAuth";
 import { _ROUTES } from "src/constants";
 import { _MESSAGES } from "src/constants/messages";
 import { formStyles, isSubmitDisabled, renderError } from "src/helpers";
 import * as yup from "yup";
-import AuthContainer from "./AuthContainer";
-import CustomNotification from "./CustomNotification";
+import PageContainer from "../PageContainer";
+import CustomNotification from "../CustomNotification";
 
 // ########################################################
 // #####################   Helpers    #####################
@@ -59,7 +59,7 @@ const Form = () => {
   // ##################   State    #################
   const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
-  const [messageType, setMessageType] = useState("success");
+  const [messageType, setMessageType] = useState(undefined);
   const [requestResolved, setRequestResolved] = useState(undefined);
 
   // #############   Event Handlers    #############
@@ -67,13 +67,6 @@ const Form = () => {
     setRequestResolved(false);
     // Make API request
     apiAuth(data, false, reset, fireNotification);
-    // Reset form fields
-    // reset({ ...defaultValues });
-
-    // Successfully submitted notification
-    // setNotificationMessage(_MESSAGES.success);
-
-    // Unsuccessfully submitted notification
   };
 
   /**
@@ -193,9 +186,11 @@ const Form = () => {
   );
 };
 
+// ########################################################
 // #################   Main Component    ##################
+// ########################################################
 const SignUpPage = () => {
-  return <AuthContainer WrappedComponent={<Form />} />;
+  return <PageContainer WrappedComponent={<Form />} />;
 };
 
 export default SignUpPage;
