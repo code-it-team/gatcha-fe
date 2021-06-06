@@ -5,12 +5,12 @@ import { Link } from "@reach/router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { apiAuth } from "src/apis/apiAuth";
-import { _LOCAL_STORAGE_KEY_NAMES, _ROUTES } from "src/constants";
+import { _ROUTES } from "src/constants";
 import { _MESSAGES } from "src/constants/messages";
 import { formStyles, isSubmitDisabled, renderError } from "src/helpers";
 import * as yup from "yup";
-import PageContainer from "../PageContainer";
 import CustomNotification from "../CustomNotification";
+import PageContainer from "../PageContainer";
 
 // ########################################################
 // #####################   Helpers    #####################
@@ -61,13 +61,12 @@ const Form = () => {
   const [notificationMessage, setNotificationMessage] = useState("");
   const [messageType, setMessageType] = useState(undefined);
   const [requestResolved, setRequestResolved] = useState(undefined);
-  const [jwt] = useState(localStorage.getItem(_LOCAL_STORAGE_KEY_NAMES.jwt));
 
   // #############   Event Handlers    #############
   const onSubmit = (data) => {
     setRequestResolved(false);
     // Make API request
-    apiAuth(jwt, data, false, reset, fireNotification);
+    apiAuth(data, false, reset, fireNotification);
   };
 
   /**

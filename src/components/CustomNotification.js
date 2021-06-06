@@ -14,7 +14,7 @@ const CustomNotification = ({ open, handleClose, messageType, message }) => {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={1000}
+      autoHideDuration={2000}
       autoCapitalize="true"
       onClose={handleClose}
       anchorOrigin={{ horizontal: "center", vertical: "top" }}

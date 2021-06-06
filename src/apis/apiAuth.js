@@ -27,8 +27,8 @@ export const apiAuth = (body, isAuth, reset, fireNotification) => {
           localStorage.setItem(_LOCAL_STORAGE_KEY_NAMES.jwt, res.body.jwt);
 
           if (subRoute === _ROUTES.signup)
-            setTimeout(() => navigate(_ROUTES.signin), 1000);
-          else setTimeout(() => navigate(_ROUTES.home), 1000);
+            setTimeout(() => navigate(_ROUTES.signin), 2000);
+          else setTimeout(() => navigate(_ROUTES.home), 2000);
         });
         reset();
       } else {
