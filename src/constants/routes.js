@@ -4,4 +4,5 @@ export const _ROUTES = {
   signin: "/signin",
   authenticate: "/authenticate",
   error: "/error",
+  edit: "/edit",
 };

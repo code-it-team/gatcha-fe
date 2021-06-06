@@ -44,3 +44,13 @@ export const formStyles = makeStyles((theme) => ({
 export const isAuthorized = () => {
   return localStorage.getItem(_LOCAL_STORAGE_KEY_NAMES.jwt) ? true : false;
 };
+
+/**
+ * @param {string} jwt
+ * @returns {object}
+ */
+export const headers = (jwt) => ({
+  "Content-Type": "application/json",
+  Accept: "application/json",
+  Authorization: `Bearer ${jwt}`,
+});

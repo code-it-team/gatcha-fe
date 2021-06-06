@@ -1,22 +1,21 @@
 import { navigate } from "@reach/router";
 import { _LOCAL_STORAGE_KEY_NAMES, _ROUTES, _URLS } from "src/constants";
+import { headers } from "src/helpers";
 import { _END_POINTS } from "./endpoints";
-
-const headers = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${localStorage.getItem(_LOCAL_STORAGE_KEY_NAMES.jwt)}`,
-};
 
 /**
  * Handles get requests
+ * @param {string} jwt
  * @param {string} subRoute
  * @param {Function} setter
  * @returns {void}
  */
-export const apiGet = (subRoute, setter) => {
+export const apiGet = (jwt, subRoute, setter) => {
+  if (!localStorage.getItem(_LOCAL_STORAGE_KEY_NAMES.jwt))
+    apiGet(jwt, subRoute, setter);
   fetch(`${_URLS.baseUrl}${subRoute}`, {
     method: "GET",
-    headers,
+    headers: headers(jwt),
   })
     .then((res) => {
       if (res?.ok) {

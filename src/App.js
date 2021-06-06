@@ -1,6 +1,7 @@
 import { Router } from "@reach/router";
 import { Suspense } from "react";
 import { PageRoute } from "./components/PageRoute";
+import EditPage from "./components/pages/EditPage";
 import ErrorPage from "./components/pages/ErrorPage";
 import HomePage from "./components/pages/HomePage";
 import SignInPage from "./components/pages/SignInPage";
@@ -15,6 +16,7 @@ const App = () => {
         <PageRoute path={_ROUTES.signin} pageComponent={<SignInPage />} />
         <PageRoute path={_ROUTES.signup} pageComponent={<SignUpPage />} />
         <ProtectedRoute path={_ROUTES.home} pageComponent={<HomePage />} />
+        <ProtectedRoute path={_ROUTES.edit} pageComponent={<EditPage />} />
         <PageRoute path={_ROUTES.error} pageComponent={<ErrorPage />} />
       </Router>
     </Suspense>

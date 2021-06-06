@@ -1,10 +1,12 @@
 import { Box } from "@material-ui/core";
-import CopyRight from "./CopyRight";
 
+// ########################################################
+// #################   Main Component    ##################
+// ########################################################
 const Footer = () => {
   return (
-    <Box mt={8}>
-      <CopyRight />
+    <Box mt={8} component="footer" color="text.secondary">
+      Copyright © code-it Team {new Date().getFullYear()}.
     </Box>
   );
 };

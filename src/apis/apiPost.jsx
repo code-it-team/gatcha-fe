@@ -1,34 +1,29 @@
 import { navigate } from "@reach/router";
-import { _LOCAL_STORAGE_KEY_NAMES, _ROUTES, _URLS } from "src/constants";
+import { _ROUTES, _URLS } from "src/constants";
+import { headers } from "src/helpers";
 
 /**
  * Handles signup/signin actions of the user
+ * @param {string} jwt
+ * @param {string} subRoute
  * @param {object} body
- * @param {string} body.email
- * @param {string} body.password
- * @param {boolean} isAuth If signin request it is True else, false
  * @param {Function} reset
  * @param {Function} fireNotification
  */
-export const apiAuth = (body, isAuth, reset, fireNotification) => {
-  const subRoute = isAuth ? _ROUTES.signin : _ROUTES.signup;
+export const apiPost = (jwt, subRoute, body, reset, fireNotification) => {
   fetch(`${_URLS.baseUrl}${subRoute}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    headers: headers(jwt),
     body: JSON.stringify(body),
   })
     .then((res) => {
       if (res?.ok) {
         // If successful
         res.json().then((res) => {
+          console.log(res);
           fireNotification(res.message, "success");
 
-          // save JWT
-          localStorage.setItem(_LOCAL_STORAGE_KEY_NAMES.jwt, res.body.jwt);
-
-          if (subRoute === _ROUTES.signup)
-            setTimeout(() => navigate(_ROUTES.signin), 1000);
-          else setTimeout(() => navigate(_ROUTES.home), 1000);
+          navigate(_ROUTES.home);
         });
         reset();
       } else {
