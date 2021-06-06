@@ -1,6 +1,7 @@
 import {
   AppBar,
-  Avatar,
+  Box,
+  Button,
   Drawer,
   IconButton,
   List,
@@ -12,9 +13,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { useState } from "react";
 import { _ROUTES } from "src/constants";
 
@@ -57,6 +59,10 @@ const Header = () => {
   const toggleDrawer = (open) => (event) => {
     setIsDrawerOpen(open);
   };
+  const logout = () => {
+    localStorage.clear();
+    navigate(_ROUTES.signin);
+  };
 
   const list = () => (
     <List>
@@ -83,15 +89,17 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <Typography className={classes.title} variant="h6" noWrap>
-          <Avatar
-            className={classes.avatar}
-            src="/assets/code-it-logo.png"
-            variant="rounded"
-          />
+          Gotcha
           <Drawer open={isDrawerOpen} onClose={toggleDrawer(false)}>
             {list()}
           </Drawer>
         </Typography>
+        <Button onClick={logout}>
+          <Box mr={1} display="flex" alignItems="center">
+            <ExitToAppIcon />
+          </Box>
+          <Typography variant="h6"> Logout</Typography>
+        </Button>
       </Toolbar>
     </AppBar>
   );
