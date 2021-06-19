@@ -4,4 +4,5 @@ export const _MESSAGES = {
   emailFormat: "Enter a valid email address, please!",
   passwordMatchError: "Passwords must match!",
   someThingWentWrong: "Something went wrong!",
+  copyToClipboard: "the link has been copied to your clipboard 📋",
 };

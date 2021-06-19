@@ -6,12 +6,12 @@ import {
   Button,
   makeStyles,
   TextareaAutosize,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { apiPost } from "src/apis/apiPost";
+import apiPostQuestions from "src/apis/apiPostQuestions";
 import { _END_POINTS } from "src/apis/endpoints";
 import { _MESSAGES } from "src/constants";
 import { isSubmitDisabled, renderError } from "src/helpers";
@@ -103,7 +103,7 @@ const EditQuestions = ({ questions, jwt }) => {
     setRequestResolved(false);
 
     // Make API request
-    apiPost(
+    apiPostQuestions(
       jwt,
       _END_POINTS.answers,
       updateQuestions(data),

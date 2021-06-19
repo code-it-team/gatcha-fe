@@ -5,4 +5,5 @@ export const _ROUTES = {
   authenticate: "/authenticate",
   error: "/error",
   edit: "/edit",
+  profileLink: "/answers/published/:link",
 };

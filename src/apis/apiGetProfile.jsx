@@ -1,28 +1,26 @@
 import { navigate } from "@reach/router";
-import { _LOCAL_STORAGE_KEY_NAMES, _ROUTES, _URLS } from "src/constants";
-import { headers } from "src/helpers";
+import { _ROUTES, _URLS } from "src/constants";
 import { _END_POINTS } from "./endpoints";
 
 /**
  * Handles get requests
- * @param {string} jwt
  * @param {string} subRoute
  * @param {Function} setter
+ * @param {Function} fireNotification
  * @returns {void}
  */
-export const apiGet = (jwt, subRoute, setter) => {
-  if (!localStorage.getItem(_LOCAL_STORAGE_KEY_NAMES.jwt))
-    apiGet(jwt, subRoute, setter);
+const apiGetProfile = (subRoute, setter, fireNotification) => {
   fetch(`${_URLS.baseUrl}${subRoute}`, {
     method: "GET",
-    headers: headers(jwt),
   })
     .then((res) => {
       if (res?.ok) {
         // If successful
         res.json().then((res) => {
+          console.log(res);
           if (subRoute === _END_POINTS.questions) {
             setter(res.body.questions);
+            fireNotification(res.message, "success");
           }
         });
       } else {
@@ -30,11 +28,15 @@ export const apiGet = (jwt, subRoute, setter) => {
         res.json().then((res) => {
           console.error(res);
           navigate(_ROUTES.error);
+          fireNotification(res.message, "error");
         });
       }
     })
     .catch((err) => {
       console.error(err);
       navigate(_ROUTES.error);
+      fireNotification(String(err), "error");
     });
 };
+
+export default apiGetProfile;

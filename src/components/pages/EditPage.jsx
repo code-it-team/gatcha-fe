@@ -1,6 +1,6 @@
 import { Box, Container } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { apiGet } from "src/apis/apiGet";
+import apiGetQuestions from "src/apis/apiGetQuestions";
 import { _LOCAL_STORAGE_KEY_NAMES } from "src/constants";
 import EditQuestions from "../EditQuestions";
 import Footer from "../Footer";
@@ -13,10 +13,11 @@ import Loader from "../Loader";
 const EditPage = () => {
   // #####################   State    #####################
   const [questions, setQuestions] = useState([]);
+  const [, setPublished] = useState(false);
   const [jwt] = useState(localStorage.getItem(_LOCAL_STORAGE_KEY_NAMES.jwt));
 
   useEffect(() => {
-    apiGet(jwt, `/questions`, setQuestions);
+    apiGetQuestions(jwt, `/questions`, setQuestions, setPublished);
   }, [jwt]);
 
   if (questions.length === 0) return <Loader />;

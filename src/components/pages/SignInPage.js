@@ -5,7 +5,7 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import { Link } from "@reach/router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { apiAuth } from "src/apis/apiAuth";
+import apiAuth from "src/apis/apiAuth";
 import { _ROUTES } from "src/constants";
 import { _MESSAGES } from "src/constants/messages";
 import { isSubmitDisabled, renderError } from "src/helpers";

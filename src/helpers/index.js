@@ -54,3 +54,26 @@ export const headers = (jwt) => ({
   Accept: "application/json",
   Authorization: `Bearer ${jwt}`,
 });
+
+/**
+ * Check if all questions answered return true, else false
+ * @param {Object[]} questions
+ * @param {string} questions.id
+ * @param {string} questions.body
+ * @param {string} questions.answer
+ * @returns {boolean}
+ */
+export const isAllQuestionsAnswered = (questions) => {
+  for (const { answer } of questions) {
+    if (answer.trim() === "") return false;
+  }
+  return true;
+};
+
+/**
+ * @param {string} link
+ * @returns {string}
+ */
+export const getSharableLink = (link) => {
+  return `${window.location.origin}/answers/published/${link}`;
+};

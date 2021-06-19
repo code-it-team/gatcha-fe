@@ -1,5 +1,4 @@
-import { navigate } from "@reach/router";
-import { _ROUTES, _URLS } from "src/constants";
+import { _URLS } from "src/constants";
 import { headers } from "src/helpers";
 
 /**
@@ -7,10 +6,9 @@ import { headers } from "src/helpers";
  * @param {string} jwt
  * @param {string} subRoute
  * @param {object} body
- * @param {Function} reset
  * @param {Function} fireNotification
  */
-export const apiPost = (jwt, subRoute, body, reset, fireNotification) => {
+const apiPublishQuestions = (jwt, subRoute, body, fireNotification) => {
   fetch(`${_URLS.baseUrl}${subRoute}`, {
     method: "POST",
     headers: headers(jwt),
@@ -22,10 +20,7 @@ export const apiPost = (jwt, subRoute, body, reset, fireNotification) => {
         res.json().then((res) => {
           console.log(res);
           fireNotification(res.message, "success");
-
-          navigate(_ROUTES.home);
         });
-        reset();
       } else {
         // If failed
         res.json().then((res) => {
@@ -39,3 +34,5 @@ export const apiPost = (jwt, subRoute, body, reset, fireNotification) => {
       fireNotification(String(err), "error");
     });
 };
+
+export default apiPublishQuestions;

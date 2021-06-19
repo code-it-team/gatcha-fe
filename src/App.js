@@ -4,6 +4,7 @@ import { PageRoute } from "./components/PageRoute";
 import EditPage from "./components/pages/EditPage";
 import ErrorPage from "./components/pages/ErrorPage";
 import HomePage from "./components/pages/HomePage";
+import ProfilePage from "./components/pages/ProfilePage";
 import SignInPage from "./components/pages/SignInPage";
 import SignUpPage from "./components/pages/SignUpPage";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -18,6 +19,7 @@ const App = () => {
         <ProtectedRoute path={_ROUTES.home} pageComponent={<HomePage />} />
         <ProtectedRoute path={_ROUTES.edit} pageComponent={<EditPage />} />
         <PageRoute path={_ROUTES.error} pageComponent={<ErrorPage />} />
+        <PageRoute path={_ROUTES.profileLink} pageComponent={<ProfilePage />} />
       </Router>
     </Suspense>
   );
