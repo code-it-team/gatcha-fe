@@ -1,6 +1,5 @@
 import { navigate } from "@reach/router";
 import { _ROUTES, _URLS } from "src/constants";
-import { _END_POINTS } from "./endpoints";
 
 /**
  * Handles get requests
@@ -15,13 +14,11 @@ const apiGetProfile = (subRoute, setter, fireNotification) => {
   })
     .then((res) => {
       if (res?.ok) {
-        // If successful
+        // If successful×
         res.json().then((res) => {
           console.log(res);
-          if (subRoute === _END_POINTS.questions) {
-            setter(res.body.questions);
-            fireNotification(res.message, "success");
-          }
+          setter(res.body.questions);
+          fireNotification(res.message, "success");
         });
       } else {
         // If failed

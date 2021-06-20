@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   accordionSummary: {
-    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main,
     borderBottom: "1px solid #565656",
   },
   accordionDetails: {},
