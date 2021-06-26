@@ -1,7 +1,6 @@
 import { navigate } from "@reach/router";
 import { _LOCAL_STORAGE_KEY_NAMES, _ROUTES, _URLS } from "src/constants";
 import { headers } from "src/helpers";
-import { _END_POINTS } from "./endpoints";
 
 /**
  * Handles get requests
@@ -22,10 +21,8 @@ const apiGetQuestions = (jwt, subRoute, setter, setPublished) => {
       if (res?.ok) {
         // If successful
         res.json().then((res) => {
-          if (subRoute === _END_POINTS.questions) {
-            setter(res.body.questions);
-            setPublished(res.body.published);
-          }
+          setter(res.body.questions);
+          setPublished(res.body.published);
         });
       } else {
         // If failed
