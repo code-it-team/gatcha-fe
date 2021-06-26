@@ -66,7 +66,9 @@ const ViewQuestions = ({ questions }) => {
             </AccordionSummary>
             <AccordionDetails className={classes.accordionDetails}>
               <Typography className={classes.details}>
-                {question.answer}
+                {question.answer === ""
+                  ? `Not answered yet ... 🙅‍♂️`
+                  : question.answer}
               </Typography>
             </AccordionDetails>
           </Accordion>
