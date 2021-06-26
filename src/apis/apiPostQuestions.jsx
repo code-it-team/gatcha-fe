@@ -20,9 +20,7 @@ const apiPostQuestions = (jwt, subRoute, body, reset, fireNotification) => {
       if (res?.ok) {
         // If successful
         res.json().then((res) => {
-          console.log(res);
           fireNotification(res.message, "success");
-
           navigate(_ROUTES.home);
         });
         reset();

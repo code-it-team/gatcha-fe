@@ -11,8 +11,6 @@ import { headers } from "src/helpers";
  * @returns {void}
  */
 const apiGetQuestions = (jwt, subRoute, setter, setPublished) => {
-  if (!localStorage.getItem(_LOCAL_STORAGE_KEY_NAMES.jwt))
-    apiGetQuestions(jwt, subRoute, setter, setPublished);
   fetch(`${_URLS.baseUrl}${subRoute}`, {
     method: "GET",
     headers: headers(jwt),
@@ -24,11 +22,12 @@ const apiGetQuestions = (jwt, subRoute, setter, setPublished) => {
           setter(res.body.questions);
           setPublished(res.body.published);
         });
-      } else {
-        // If failed
-        res.json().then((res) => {
-          console.error(res);
-          navigate(_ROUTES.error);
+      } else if (res.status === 400) {
+        // If failed, not valid token
+        res.text().then((err) => {
+          console.error(err);
+          localStorage.removeItem(_LOCAL_STORAGE_KEY_NAMES.jwt);
+          navigate(_ROUTES.signin);
         });
       }
     })

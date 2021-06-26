@@ -27,17 +27,25 @@ const HomePage = () => {
 
   useEffect(() => {
     apiGetQuestions(jwt, _END_POINTS.questions, setQuestions, setPublished);
-    apiGetPublishLink(
-      jwt,
-      _END_POINTS.getPublishLink,
-      fireNotification,
-      setProfileLink
-    );
-  }, [jwt, profileLink]);
+    if (published) {
+      apiGetPublishLink(
+        jwt,
+        _END_POINTS.getPublishLink,
+        fireNotification,
+        setProfileLink
+      );
+    }
+  }, [published, jwt]);
   // #################   Event Handlers    ################
   const onCLick = () => {
     // Make API request
-    apiPublishQuestions(jwt, _END_POINTS.publish, questions, fireNotification);
+    apiPublishQuestions(
+      jwt,
+      _END_POINTS.publish,
+      questions,
+      fireNotification,
+      setPublished
+    );
   };
 
   /**
@@ -57,15 +65,15 @@ const HomePage = () => {
     setOpen(false);
   };
   const renderPublishLink = () => {
-    if (published)
-      return (
-        <Box
-          mt="3em"
-          display="flex"
-          flexWrap="wrap"
-          justifyContent="space-around"
-          alignItems="center"
-        >
+    return (
+      <Box
+        mt="3em"
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="space-around"
+        alignItems="center"
+      >
+        {published ? (
           <Button
             variant="contained"
             onClick={() => {
@@ -75,18 +83,16 @@ const HomePage = () => {
           >
             Copy Link
           </Button>
-        </Box>
-      );
-    return (
-      <Box mb={5}>
-        <Button
-          variant="contained"
-          color="secondary"
-          disabled={published || !isAllQuestionsAnswered(questions)}
-          onClick={onCLick}
-        >
-          Publish
-        </Button>
+        ) : (
+          <Button
+            variant="contained"
+            color="secondary"
+            disabled={published || !isAllQuestionsAnswered(questions)}
+            onClick={onCLick}
+          >
+            Publish
+          </Button>
+        )}
       </Box>
     );
   };

@@ -7,8 +7,15 @@ import { headers } from "src/helpers";
  * @param {string} subRoute
  * @param {object} body
  * @param {Function} fireNotification
+ * @param {Function} setPublished
  */
-const apiPublishQuestions = (jwt, subRoute, body, fireNotification) => {
+const apiPublishQuestions = (
+  jwt,
+  subRoute,
+  body,
+  fireNotification,
+  setPublished
+) => {
   fetch(`${_URLS.baseUrl}${subRoute}`, {
     method: "POST",
     headers: headers(jwt),
@@ -18,8 +25,8 @@ const apiPublishQuestions = (jwt, subRoute, body, fireNotification) => {
       if (res?.ok) {
         // If successful
         res.json().then((res) => {
-          console.log(res);
           fireNotification(res.message, "success");
+          setPublished(true);
         });
       } else {
         // If failed

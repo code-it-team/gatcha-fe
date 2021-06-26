@@ -17,7 +17,6 @@ const apiGetProfile = (subRoute, setter, fireNotification) => {
         // If successful×
         res.json().then((res) => {
           setter(res.body.questions);
-          fireNotification(res.message, "success");
         });
       } else {
         // If failed
